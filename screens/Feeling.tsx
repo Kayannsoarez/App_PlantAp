@@ -5,7 +5,7 @@ import { Text, View } from '../components/Themed';
 import { RootTabParamList } from '../types';
 
 const Feeling: React.FC = () => {
-    const { navigate } = useNavigation<NavigationProp<RootTabParamList>>();
+    const { navigate, goBack } = useNavigation<NavigationProp<RootTabParamList>>();
 
     return (
         <View style={styles.container}>
@@ -46,7 +46,7 @@ const Feeling: React.FC = () => {
             </View>
 
             <View style={styles.viewButton}>
-                <TouchableOpacity style={styles.button} onPress={() => navigate('Monitor')}>
+                <TouchableOpacity style={styles.button} onPress={() => goBack()}>
                     <Text style={styles.buttonText}>VOLTAR</Text>
                 </TouchableOpacity>
             </View>

@@ -18,7 +18,7 @@ const Plants: React.FC = () => {
           style={styles.image}
           source={require('../assets/images/espada.png')}
         />
-        <TouchableOpacity style={styles.button} onPress={() => navigate('Monitor')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigate('Monitor', {plant: 'esp'})}>
           <Text style={styles.buttonText}>Espada de São Jorge</Text>
         </TouchableOpacity>
       </View>
@@ -27,7 +27,7 @@ const Plants: React.FC = () => {
           style={styles.image}
           source={require('../assets/images/cacto.png')}
         />
-        <TouchableOpacity style={styles.button} onPress={() => navigate('Monitor')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigate('Monitor', {plant: 'cac'})}>
           <Text style={styles.buttonText}>Cacto</Text>
         </TouchableOpacity>
       </View>
@@ -36,7 +36,7 @@ const Plants: React.FC = () => {
           style={styles.image}
           source={require('../assets/images/suculenta.png')}
         />
-        <TouchableOpacity style={styles.button} onPress={() => navigate('Monitor')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigate('Monitor', {plant: 'suc'})}>
           <Text style={styles.buttonText}>Suculenta</Text>
         </TouchableOpacity>
       </View>
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 27,
     paddingVertical: 15,
+    marginVertical: 0,
   },
   buttonText: {
     fontWeight: '600',

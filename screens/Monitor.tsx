@@ -1,11 +1,29 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Text, View } from '../components/Themed';
 import { RootTabParamList } from '../types';
 
-const Monitor: React.FC = () => {
+export type MonitorProps = NativeStackScreenProps<
+    RootTabParamList,
+    'Monitor'
+>
+
+const Monitor: React.FC<MonitorProps> = ({ navigation, route }) => {
     const { navigate } = useNavigation<NavigationProp<RootTabParamList>>();
+
+    const PlantImage = () => {
+        if(route.params.plant === 'esp') {
+            return <Image style={styles.image} source={require('../assets/images/espada.png')} />;
+        }
+        if(route.params.plant === 'cac') {
+            return <Image style={styles.image} source={require('../assets/images/cacto.png')} />;
+        }
+        if(route.params.plant === 'suc') {
+            return <Image style={styles.image} source={require('../assets/images/suculenta.png')} />;
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -17,11 +35,9 @@ const Monitor: React.FC = () => {
             </View>
             <View style={styles.plantContainer}>
                 <Image style={styles.backimage} source={require('../assets/images/Ellipse.png')} />
-
                 <TouchableOpacity onPress={() => navigate('Feeling')}>
-                    <Image style={styles.image} source={require('../assets/images/espada.png')} />
+                    {PlantImage()}
                 </TouchableOpacity>
-
             </View>
 
             <View style={styles.viewCenter}>
@@ -54,7 +70,6 @@ const Monitor: React.FC = () => {
                     <Text style={styles.buttonText}>ATUALIZAR</Text>
                 </TouchableOpacity>
             </View>
-
         </View>
 
     );
