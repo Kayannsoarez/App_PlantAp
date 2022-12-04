@@ -12,3 +12,11 @@ $ npm install
 ```bash
 $ npx expo start
 ```
+
+## Technologies
+* Expo
+* React Native
+* TypeScript
+* JavaScript
+* Git
+
