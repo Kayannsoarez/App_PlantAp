@@ -1,5 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, SafeAreaView } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { RootTabParamList } from '../types';
@@ -63,5 +64,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'flex-end',
     marginVertical: 60,
-},
+  },
+  scrollView: {
+    backgroundColor: 'transparent',
+    centerContent: 'FALSE',
+  },
 });

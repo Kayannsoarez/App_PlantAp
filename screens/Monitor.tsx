@@ -1,9 +1,12 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ScrollView } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { RootTabParamList } from '../types';
+import { useEffect, useState } from 'react';
+import { getPlantData } from '../service/services';
 
 export type MonitorProps = NativeStackScreenProps<
     RootTabParamList,
@@ -12,6 +15,39 @@ export type MonitorProps = NativeStackScreenProps<
 
 const Monitor: React.FC<MonitorProps> = ({ navigation, route }) => {
     const { navigate } = useNavigation<NavigationProp<RootTabParamList>>();
+
+    const [showFeeling, setShowFeeling] = useState<boolean>(false);
+    const [temp, setTemp] = useState<number>(0);
+    const [feel, setFeel] = useState<number>(0);
+    const [lumi, setLumi] = useState<number>(0);
+    const [humi, setHumi] = useState<number>(0);
+  
+    const setData = (async () => {
+      const response = await getPlantData();
+  
+      if(response.isSuccess) {
+        const values = response.getValue();
+  
+        values.forEach((value) => {
+          if(value.variable === 'temp') {
+            setTemp(value.value);
+          }
+          if(value.variable === 'humi') {
+            setHumi(value.value);
+          }
+          if(value.variable === 'feel') {
+            setFeel(value.value);
+          }
+          if(value.variable === 'lumi') {
+            setLumi(value.value);
+          }
+        })
+      }
+    })
+  
+    useEffect(() => {
+      setData();
+    }, [])
 
     const PlantImage = () => {
         if(route.params.plant === 'esp') {
@@ -46,27 +82,27 @@ const Monitor: React.FC<MonitorProps> = ({ navigation, route }) => {
                     <Text style={styles.textRetangle}>Umidade {'\n'} do Solo</Text>
 
                     <View style={styles.box}>
-                        <Text style={styles.textIcon}>30</Text>
+                        <Text style={styles.textIcon}>{humi.toFixed()}%</Text>
                     </View>
                 </View>
                 <View style={styles.rectangle}>
                     <Image source={require('../assets/images/Thermal.png')} />
                     <Text style={styles.textRetangle}>Temperatura</Text>
                     <View style={styles.box}>
-                        <Text style={styles.textIcon}>30</Text>
+                        <Text style={styles.textIcon}>{temp.toFixed()} ºC</Text>
                     </View>
                 </View>
                 <View style={styles.rectangle}>
                     <Image source={require('../assets/images/Sun.png')} />
                     <Text style={styles.textRetangle}>Luminosidade</Text>
                     <View style={styles.box}>
-                        <Text style={styles.textIcon}>30</Text>
+                        <Text style={styles.textIcon}>{lumi.toFixed()} lm</Text>
                     </View>
                 </View>
             </View>
 
             <View style={styles.viewButton}>
-                <TouchableOpacity style={styles.button} onPress={() => navigate('Plants')}>
+                <TouchableOpacity style={styles.button} onPress={() => setData()}>
                     <Text style={styles.buttonText}>ATUALIZAR</Text>
                 </TouchableOpacity>
             </View>
@@ -178,5 +214,8 @@ const styles = StyleSheet.create({
     textRetangle: {
         fontSize: 22,
         color: 'black',
-    }
+    },
+    scrollView: {
+        backgroundColor: 'white',
+    },
 });

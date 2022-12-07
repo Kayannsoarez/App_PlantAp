@@ -1,5 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, SafeAreaView } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { RootTabParamList } from '../types';
@@ -87,5 +88,8 @@ const styles = StyleSheet.create({
     fontSize: 23,
     lineHeight: 28,
     color: 'black',
+  },
+  scrollView: {
+    backgroundColor: 'white',
   },
 });
