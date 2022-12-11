@@ -18,5 +18,6 @@ $ npx expo start
 * React Native
 * TypeScript
 * JavaScript
+* Axios
 * Git
 
