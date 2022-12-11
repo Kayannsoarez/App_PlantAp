@@ -9,6 +9,7 @@ const Plants: React.FC = () => {
   const {navigate} = useNavigation<NavigationProp<RootTabParamList>>();
 
   return (
+    <ScrollView style={styles.scrollView}>
     <View style={styles.container}>
       <View style={styles.plantHeader}>
         
@@ -42,6 +43,7 @@ const Plants: React.FC = () => {
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
   );
 }
 
@@ -54,40 +56,40 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   plantHeader: {
+    marginTop: 60,
     alignItems: 'center',
     backgroundColor: 'transparent',
-    marginTop: 60,
   },
   plantContainer: {
+    width: '80%',
+    marginTop: 10,
     alignItems: 'center',
     backgroundColor: 'transparent',
-    marginTop: 10,
-    width: '80%',
   },
   title: {
-    fontWeight: '800',
     fontSize: 36,
     lineHeight: 44,
     color: '#166423',
+    fontWeight: '800',
   },
   image: {
     justifyContent: "center",
   },
   button: {
-    backgroundColor: '#DFE0E2',
-    width: '100%',
     margin: 5,
-    borderRadius: 19,
+    width: '100%',
     borderWidth: 1,
-    paddingHorizontal: 27,
-    paddingVertical: 15,
+    borderRadius: 19,
     marginVertical: 0,
+    paddingVertical: 15,
+    paddingHorizontal: 27,
+    backgroundColor: '#DFE0E2',  
   },
   buttonText: {
-    fontWeight: '600',
     fontSize: 23,
     lineHeight: 28,
     color: 'black',
+    fontWeight: '600',
   },
   scrollView: {
     backgroundColor: 'white',

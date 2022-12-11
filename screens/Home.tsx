@@ -9,16 +9,19 @@ const Home: React.FC = () => {
   const {navigate} = useNavigation<NavigationProp<RootTabParamList>>();
 
   return (
+    <ScrollView style={styles.scrollView}>
     <View style={styles.container}>
       <ImageBackground source={require('../assets/images/back.png')} resizeMode="cover" style={styles.image}>
         <Text style={styles.title}>PlantAp - Plants in Apartment</Text>
         <View style={styles.viewButton}>
           <TouchableOpacity style={styles.button} onPress={() => navigate('Plants')}>
-            <Text style={styles.buttonText}>  Iniciar                                    {'>'}{'>'}{'>'} </Text>
+            <Text style={styles.buttonText}>  Iniciar    </Text>
+            
           </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>
+    </ScrollView>
   );
 }
 
@@ -32,41 +35,48 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    fontWeight: '800',
+    left: 25,
     fontSize: 36,
     lineHeight: 44,
-    left: 25,
     marginTop: 450,
     color: '#166423',
+    fontWeight: '800',
   },
   image: {
     width: '100%',
     height: '100%',
-    justifyContent: "center",
     alignItems: 'center',
+    justifyContent: "center",
+    backgroundColor: 'white',
   },
   button: {
-    backgroundColor: '#DFE0E2',
-    width: '80%',
-    marginTop: 50,
-    borderRadius: 19,
-    borderWidth: 1,
+    width: 354,
     padding: 10,
+    marginTop: 50,
+    borderWidth: 1,
+    borderRadius: 19,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+  },
+  shadowRadius: 2.22,
+  shadowOpacity: 0.22,
+  backgroundColor: '#DFE0E2',
   },
   buttonText: {
-    fontWeight: '600',
     fontSize: 23,
     lineHeight: 28,
     color: 'black',
+    fontWeight: '600',
   },
   viewButton: {
     flex: 1,
-    backgroundColor: 'transparent',
+    marginVertical: 150,
     justifyContent: 'flex-end',
-    marginVertical: 60,
+    backgroundColor: 'transparent',
+    
   },
   scrollView: {
-    backgroundColor: 'transparent',
-    centerContent: 'FALSE',
+    backgroundColor: 'white',
   },
 });

@@ -1,4 +1,4 @@
-import { NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native';
 
@@ -15,32 +15,32 @@ const Feeling: React.FC = () => {
     const [feel, setFeel] = useState<number>(0);
     const [lumi, setLumi] = useState<number>(0);
     const [humi, setHumi] = useState<number>(0);
-  
+
     const setData = (async () => {
-      const response = await getPlantData();
-  
-      if(response.isSuccess) {
-        const values = response.getValue();
-  
-        values.forEach((value) => {
-          if(value.variable === 'temp') {
-            setTemp(value.value);
-          }
-          if(value.variable === 'humi') {
-            setHumi(value.value);
-          }
-          if(value.variable === 'feel') {
-            setFeel(value.value);
-          }
-          if(value.variable === 'lumi') {
-            setLumi(value.value);
-          }
-        })
-      }
+        const response = await getPlantData();
+
+        if (response.isSuccess) {
+            const values = response.getValue();
+
+            values.forEach((value) => {
+                if (value.variable === 'temp') {
+                    setTemp(value.value);
+                }
+                if (value.variable === 'humi') {
+                    setHumi(value.value);
+                }
+                if (value.variable === 'feel') {
+                    setFeel(value.value);
+                }
+                if (value.variable === 'lumi') {
+                    setLumi(value.value);
+                }
+            })
+        }
     })
-  
+
     useEffect(() => {
-      setData();
+        setData();
     }, [])
 
     const PlantFeeling = () => {
@@ -91,51 +91,52 @@ const Feeling: React.FC = () => {
         }
     }
 
-
     return (
-        <View style={styles.container}>
-            <View style={styles.plantHeader}>
-                <TouchableOpacity onPress={() => navigate('Plants')}>
-                    <Image source={require('../assets/images/home.png')} />
-                </TouchableOpacity>
-                <Text style={styles.title}>Planta Feeling</Text>
-            </View>
-            <View style={styles.plantContainer}>
-                {PlantFeeling()}
-                {PlantText()}
-            </View>
+        <ScrollView style={styles.scrollView}>
+            <View style={styles.container}>
+                <View style={styles.plantHeader}>
+                    <TouchableOpacity onPress={() => navigate('Plants')}>
+                        <Image source={require('../assets/images/home.png')} />
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Planta Feeling</Text>
+                </View>
+                <View style={styles.plantContainer}>
+                    {PlantFeeling()}
+                    {PlantText()}
+                </View>
 
-            <View style={styles.viewCenter}>
-                <View style={styles.rectangle}>
-                    <Image source={require('../assets/images/Water.png')} />
-                    <View style={styles.box}>
-                        <Text style={styles.textIcon}>{humi.toFixed()}%</Text>
+                <View style={styles.viewCenter}>
+                    <View style={styles.rectangle}>
+                        <Image source={require('../assets/images/Water.png')} />
+                        <View style={styles.box}>
+                            <Text style={styles.textIcon}>{humi.toFixed()}%</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.rectangle}>
+                        <Image source={require('../assets/images/Thermal.png')} />
+
+                        <View style={styles.box}>
+                            <Text style={styles.textIcon}>{temp.toFixed()} ºC</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.rectangle}>
+                        <Image source={require('../assets/images/Sun.png')} />
+
+                        <View style={styles.box}>
+                            <Text style={styles.textIcon}>{lumi.toFixed()} lm</Text>
+                        </View>
                     </View>
                 </View>
 
-                <View style={styles.rectangle}>
-                    <Image source={require('../assets/images/Thermal.png')} />
-
-                    <View style={styles.box}>
-                        <Text style={styles.textIcon}>{temp.toFixed()} ºC</Text>
-                    </View>
-                </View>
-
-                <View style={styles.rectangle}>
-                    <Image source={require('../assets/images/Sun.png')} />
-
-                    <View style={styles.box}>
-                        <Text style={styles.textIcon}>{lumi.toFixed()} lm</Text>
-                    </View>
+                <View style={styles.viewButton}>
+                    <TouchableOpacity style={styles.button} onPress={() => goBack()}>
+                        <Text style={styles.buttonText}>VOLTAR</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-
-            <View style={styles.viewButton}>
-                <TouchableOpacity style={styles.button} onPress={() => goBack()}>
-                    <Text style={styles.buttonText}>VOLTAR</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+        </ScrollView>
     );;
 }
 
@@ -149,12 +150,12 @@ const styles = StyleSheet.create({
     },
     plantHeader: {
         marginTop: 50,
-        flexDirection: 'row',
         alignItems: 'center',
+        flexDirection: 'row',
         backgroundColor: 'transparent',
     },
     plantContainer: {
-        marginTop: 10,
+        marginTop: 5,
         alignItems: 'center',
         backgroundColor: 'transparent',
     },
@@ -163,14 +164,8 @@ const styles = StyleSheet.create({
         color: '#166423',
         fontWeight: '800',
     },
-    textIcon: {
-        fontSize: 24,
-        color: 'white',
-        textAlign: 'center',
-    },
     backimage: {
-        height: '80%',
-        maxHeight: 200,
+        maxHeight: '60%',
         resizeMode: 'contain',
     },
     button: {
@@ -192,15 +187,29 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    rectangle: {
-        marginBottom: 40,
-        flexDirection: 'row',
+    viewCenter: {
+        flex: 1,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: 'transparent',
-
     },
-    viewButton: {
-        justifyContent: 'flex-end',
-        backgroundColor: 'transparent',
+    rectangle: {
+        flex: 1,
+        width: 250,
+        height: 100,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        borderRadius: 10,
+        marginBottom: 20,
+        backgroundColor: '#DFE0E2',
     },
     box: {
         width: 89,
@@ -210,12 +219,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#3A8221',
     },
-    viewCenter: {
-        flex: 1,
-        marginTop: 20,
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
+    textIcon: {
+        fontSize: 24,
+        color: 'white',
+        textAlign: 'center',
+    },
+    viewButton: {
+        justifyContent: 'flex-end',
         backgroundColor: 'transparent',
     },
     scrollView: {

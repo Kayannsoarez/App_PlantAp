@@ -21,93 +21,94 @@ const Monitor: React.FC<MonitorProps> = ({ navigation, route }) => {
     const [feel, setFeel] = useState<number>(0);
     const [lumi, setLumi] = useState<number>(0);
     const [humi, setHumi] = useState<number>(0);
-  
+
     const setData = (async () => {
-      const response = await getPlantData();
-  
-      if(response.isSuccess) {
-        const values = response.getValue();
-  
-        values.forEach((value) => {
-          if(value.variable === 'temp') {
-            setTemp(value.value);
-          }
-          if(value.variable === 'humi') {
-            setHumi(value.value);
-          }
-          if(value.variable === 'feel') {
-            setFeel(value.value);
-          }
-          if(value.variable === 'lumi') {
-            setLumi(value.value);
-          }
-        })
-      }
+        const response = await getPlantData();
+
+        if (response.isSuccess) {
+            const values = response.getValue();
+
+            values.forEach((value) => {
+                if (value.variable === 'temp') {
+                    setTemp(value.value);
+                }
+                if (value.variable === 'humi') {
+                    setHumi(value.value);
+                }
+                if (value.variable === 'feel') {
+                    setFeel(value.value);
+                }
+                if (value.variable === 'lumi') {
+                    setLumi(value.value);
+                }
+            })
+        }
     })
-  
+
     useEffect(() => {
-      setData();
+        setData();
     }, [])
 
     const PlantImage = () => {
-        if(route.params.plant === 'esp') {
+        if (route.params.plant === 'esp') {
             return <Image style={styles.image} source={require('../assets/images/espada.png')} />;
         }
-        if(route.params.plant === 'cac') {
+        if (route.params.plant === 'cac') {
             return <Image style={styles.image} source={require('../assets/images/cacto.png')} />;
         }
-        if(route.params.plant === 'suc') {
+        if (route.params.plant === 'suc') {
             return <Image style={styles.image} source={require('../assets/images/suculenta.png')} />;
         }
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.plantHeader}>
-                <TouchableOpacity onPress={() => navigate('Plants')}>
-                    <Image source={require('../assets/images/home.png')} />
-                </TouchableOpacity>
-                <Text style={styles.title}>Planta Monitor</Text>
-            </View>
-            <View style={styles.plantContainer}>
-                <Image style={styles.backimage} source={require('../assets/images/Ellipse.png')} />
-                <TouchableOpacity onPress={() => navigate('Feeling')}>
-                    {PlantImage()}
-                </TouchableOpacity>
-            </View>
+        <ScrollView style={styles.scrollView}>
+            <View style={styles.container}>
+                <View style={styles.plantHeader}>
+                    <TouchableOpacity onPress={() => navigate('Plants')}>
+                        <Image source={require('../assets/images/home.png')} />
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Planta Monitor</Text>
+                </View>
+                <View style={styles.plantContainer}>
+                    <Image style={styles.backimage} source={require('../assets/images/Ellipse.png')} />
+                    <TouchableOpacity onPress={() => navigate('Feeling')}>
+                        {PlantImage()}
+                    </TouchableOpacity>
+                </View>
 
-            <View style={styles.viewCenter}>
-                <View style={styles.rectangle}>
-                    <Image source={require('../assets/images/Water.png')} />
-                    <Text style={styles.textRetangle}>Umidade {'\n'} do Solo</Text>
+                <View style={styles.viewCenter}>
+                    <View style={styles.rectangle}>
+                        <Image source={require('../assets/images/Water.png')} />
+                        <Text style={styles.textRetangle}>Umidade {'\n'} do Solo</Text>
 
-                    <View style={styles.box}>
-                        <Text style={styles.textIcon}>{humi.toFixed()}%</Text>
+                        <View style={styles.box}>
+                            <Text style={styles.textIcon}>{humi.toFixed()}%</Text>
+                        </View>
+                    </View>
+                    <View style={styles.rectangle}>
+                        <Image source={require('../assets/images/Thermal.png')} />
+                        <Text style={styles.textRetangle}>Temperatura</Text>
+                        <View style={styles.box}>
+                            <Text style={styles.textIcon}>{temp.toFixed()} ºC</Text>
+                        </View>
+                    </View>
+                    <View style={styles.rectangle}>
+                        <Image source={require('../assets/images/Sun.png')} />
+                        <Text style={styles.textRetangle}>Luminosidade</Text>
+                        <View style={styles.box}>
+                            <Text style={styles.textIcon}>{lumi.toFixed()} lm</Text>
+                        </View>
                     </View>
                 </View>
-                <View style={styles.rectangle}>
-                    <Image source={require('../assets/images/Thermal.png')} />
-                    <Text style={styles.textRetangle}>Temperatura</Text>
-                    <View style={styles.box}>
-                        <Text style={styles.textIcon}>{temp.toFixed()} ºC</Text>
-                    </View>
-                </View>
-                <View style={styles.rectangle}>
-                    <Image source={require('../assets/images/Sun.png')} />
-                    <Text style={styles.textRetangle}>Luminosidade</Text>
-                    <View style={styles.box}>
-                        <Text style={styles.textIcon}>{lumi.toFixed()} lm</Text>
-                    </View>
+
+                <View style={styles.viewButton}>
+                    <TouchableOpacity style={styles.button} onPress={() => setData()}>
+                        <Text style={styles.buttonText}>ATUALIZAR</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-
-            <View style={styles.viewButton}>
-                <TouchableOpacity style={styles.button} onPress={() => setData()}>
-                    <Text style={styles.buttonText}>ATUALIZAR</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-
+        </ScrollView>
     );
 }
 
@@ -131,51 +132,35 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     title: {
-        fontWeight: '800',
         fontSize: 36,
         color: '#166423',
-    },
-    textIcon: {
-        fontSize: 24,
-        textAlign: 'center',
-        color: 'white'
+        fontWeight: '800',
     },
     backimage: {
         maxHeight: '80%',
-        resizeMode: 'contain',
         position: 'absolute',
-
+        resizeMode: 'contain',
     },
     image: {
-        maxHeight: '65%',
-        resizeMode: 'contain',
         marginTop: 35,
-        marginBottom: 20
-
+        maxHeight: '65%',
+        marginBottom: 20,
+        resizeMode: 'contain',
     },
-    button: {
-        backgroundColor: '#3A8221',
-        width: 292,
-        margin: 5,
-        borderRadius: 30,
-        borderWidth: 1,
-        paddingHorizontal: 27,
-        paddingVertical: 15,
-        marginBottom: 40,
-    },
-    buttonText: {
-        fontWeight: '600',
-        fontSize: 23,
-        lineHeight: 28,
-        color: 'white',
-        justifyContent: 'center',
-        textAlign: 'center',
+    viewCenter: {
+        flex: 1,
+        marginTop: 10,
+        marginBottom: 10,
+        alignSelf: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
     },
     rectangle: {
         flex: 1,
+        width: 348,
+        height: 100,
         flexDirection: 'row',
-        width: '88%',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         shadowOffset: {
@@ -187,33 +172,46 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 30,
         backgroundColor: '#DFE0E2',
-
+    },
+    textRetangle: {
+        fontSize: 22,
+        color: 'black',
+    },
+    box: {
+        width: 89,
+        height: 50,
+        marginLeft: 10,
+        borderRadius: 30,
+        justifyContent: 'center',
+        backgroundColor: '#3A8221',
+    },
+    textIcon: {
+        fontSize: 24,
+        color: 'white',
+        textAlign: 'center',
     },
     viewButton: {
         justifyContent: 'flex-end',
         backgroundColor: 'transparent',
     },
-    box: {
-        width: 89,
-        height: 50,
+    button: {
+        margin: 5,
+        width: 292,
+        borderWidth: 1,
+        marginBottom: 40,
         borderRadius: 30,
-        justifyContent: 'center',
+        paddingVertical: 15,
+        paddingHorizontal: 27,
         backgroundColor: '#3A8221',
-        marginLeft: 10,
-
     },
-    viewCenter: {
-        flex: 1,
+    buttonText: {
+        fontSize: 23,
+        lineHeight: 28,
+        color: 'white',
+        fontWeight: '600',
+        textAlign: 'center',
         alignItems: 'center',
-        alignSelf: 'center',
         justifyContent: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-        backgroundColor: 'transparent',
-    },
-    textRetangle: {
-        fontSize: 22,
-        color: 'black',
     },
     scrollView: {
         backgroundColor: 'white',
