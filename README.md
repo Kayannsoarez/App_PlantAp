@@ -1,5 +1,6 @@
 # App_PlantAp
 Mobile App - Plants In Apartment
+![](https://github.com/Kayannsoarez/App_PlantAp/blob/main/assets/images/Banner_App.png)
 
 ## Installation
 
